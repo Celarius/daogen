@@ -604,11 +604,18 @@ abstract class AbstractBaseDao implements AbstractBaseDaoInterface
   private function setBinds(\PDOStatement &$statement, array $params): void
   {
     # Binds
-    foreach ($params as $bind=>$value) {
-      if (!is_null($value)) {
-        $statement->bindValue(':'.\ltrim($bind,':'), $value);
+    foreach ($params as $bind=>$value)
+    {
+      if (\is_int($value)) {
+        $statement->bindValue( ':'.\ltrim($bind,':'), (int)$value, \PDO::PARAM_INT); // INT !
+      } else
+      if (\is_bool($value)) {
+        $statement->bindValue( ':'.\ltrim($bind,':'), (bool)$value, \PDO::PARAM_BOOL);
+      } else
+      if (\is_null($value)) {
+        $statement->bindValue( ':'.\ltrim($bind,':'), null, \PDO::PARAM_NULL);
       } else {
-        $statement->bindValue(':'.\ltrim($bind,':'), $value, \PDO::PARAM_NULL);
+        $statement->bindValue( ':'.\ltrim($bind,':'), $value, \PDO::PARAM_STR);
       }
     }
 
