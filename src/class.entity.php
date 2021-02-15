@@ -195,7 +195,7 @@ class Entity
       //   $s .= '    $this->'.$field->getName().' = (float) $'.$field->getName().';'.PHP_EOL;
       // } else
       if ($field->isDateTime()) {
-        $s .= '    if (strcasecmp($'.$field->getName().',\'0000-00-00 00:00:00\')==0) $'.$field->getName().' = null;'.PHP_EOL;
+        $s .= '    if (\strcasecmp($'.$field->getName().',\'0000-00-00 00:00:00\')==0) $'.$field->getName().' = null;'.PHP_EOL;
         $s .= PHP_EOL;
         $s .= '    $this->'.$field->getName().' = $'.$field->getName().';'.PHP_EOL;
         $s .= PHP_EOL;
