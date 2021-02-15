@@ -157,7 +157,7 @@ require_once 'class.test.php';
     }
 
     # Copy Abstract* files
-    copy ('Abstracts/AbstractBaseDaoInterface.php', 'Output/src/app/Controllers/AbstractBaseDaoInterface.php');
+    copy ('Abstracts/AbstractBaseDaoInterface.php', 'Output/src/app/Models/AbstractBaseDaoInterface.php');
     copy ('Abstracts/AbstractBaseDao.php',          'Output/src/app/Models/AbstractBaseDao.php');
     copy ('Abstracts/AbstractBaseEntity.php',       'Output/src/app/Models/AbstractBaseEntity.php');
   }

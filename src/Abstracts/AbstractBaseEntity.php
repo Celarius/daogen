@@ -55,7 +55,7 @@ abstract class AbstractBaseEntity
    */
   public function fromJson(string $json)
   {
-    return $this->fromArray( \json_decode($arr,true) );
+    return $this->fromArray( \json_decode($json,true) );
   }
 
   /**
