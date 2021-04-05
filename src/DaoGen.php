@@ -11,7 +11,7 @@
 
 ##############################################################################################################
 
-$daoGenVersion = '0.5.18';
+$daoGenVersion = '0.5.19';
 
 require_once 'includes/includes.php';
 require_once 'class.database.php';
@@ -23,11 +23,11 @@ require_once 'class.test.php';
 #####################################################################################################
 
   # Output format (depricated)
-  $format = strtolower($_GET['format'] ?? 'html');
+  $format = \strtolower($_GET['format'] ?? 'html');
   if (empty($format)) $format = 'html';
 
   # The DDL as POST
-  $ddl = file_get_contents('php://input');
+  $ddl = \file_get_contents('php://input');
   ($ddl) ?? $ddl = $_POST["ddl"];
 
   # Get the Namespace (GET, POST order)
@@ -37,7 +37,7 @@ require_once 'class.test.php';
   #   DB          : "\App\Models\" . $namespace . "\Db"
   #   Tests       : "\App\Tests\" . $namespace . "\"
   $namespace = $_GET['namespace'] ?? $_POST['namespace'] ?? 'rest\\v1';
-  $namespace = trim($namespace,'\\/'); // Remove leading+trailing \ and /
+  $namespace = \trim($namespace,'\\/'); // Remove leading+trailing \ and /
 
   # Package name
   $package = $_GET['package'] ?? $_POST['package'] ?? '<application>';
@@ -45,7 +45,7 @@ require_once 'class.test.php';
 
   # Show HTML form if no DDL sent via POST
   if (empty($ddl)) {
-      header('Content-Type: text/html');
+      \header('Content-Type: text/html');
 
       echo '<!DOCTYPE html>';
       echo '<html>';
@@ -97,26 +97,26 @@ require_once 'class.test.php';
   # Create the files
   #
 
-  $namespace = ucwords($namespace,'\\/');
+  $namespace = \ucwords($namespace,'\\/');
 
   #
   $database = new \Database( 'Unknown', $ddl, ['namespace'=>$namespace] );
 
-  echo 'DaoGen v'.$daoGenVersion.PHP_EOL;
-  echo PHP_EOL;
-  echo 'Generating files from Database `'.$database->getName().'`, '.count($database->getTables()).' tables'.PHP_EOL;
-  echo PHP_EOL;
+  echo 'DaoGen v'.$daoGenVersion.\PHP_EOL;
+  echo \PHP_EOL;
+  echo 'Generating files from Database `'.$database->getName().'`, '.\count($database->getTables()).' tables'.PHP_EOL;
+  echo \PHP_EOL;
 
-  $t1 = microtime(true);
+  $t1 = \microtime(true);
 
-  header('Content-Type: text/plain');
+  \header('Content-Type: text/plain');
 
   # Make dirs
-  @mkdir('output/src/app/Models'.namespaceFilename($namespace).'/Db',0755,true);
-  @mkdir('output/src/app/Controllers'.namespaceFilename($namespace),0755,true);
-  @mkdir('output/tests'.namespaceFilename($namespace),0755,true);
+  @mkdir('output/src/app/Models'.\namespaceFilename($namespace).'/Db',0755,true);
+  @mkdir('output/src/app/Controllers'.\namespaceFilename($namespace),0755,true);
+  @mkdir('output/tests'.\namespaceFilename($namespace),0755,true);
 
-  if (count($database->getTables())>0) {
+  if (\count($database->getTables())>0) {
     # Options array
     $options['namespace'] = $namespace;
     $options['package'] = $package;

@@ -1,5 +1,8 @@
 # DaoGen Changelog
 
+## 0.5.19
+* entity classes check for NULL in text fields, and send null instead of ''
+
 ## 0.5.18
 * By default text fields are truncated to the length of the DB fieldin setXXX() method
 
