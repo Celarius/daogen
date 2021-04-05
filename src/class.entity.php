@@ -206,7 +206,8 @@ class Entity
         $s .= '    }'.PHP_EOL;
       } elseif ($field->isText()) {
         // $s .= '    $this->'.$field->getName().' = \mb_substr( ($'.$field->getName().' ?? \'\'), 0, ' . $field->getLength() . ' );'.PHP_EOL;
-        $s .= '    $this->'.$field->getName().' = (!is_null($'.$field->getName().' ?? null) ? \mb_substr( ($'.$field->getName().'), 0, ' . $field->getLength() . ' : null );'.PHP_EOL;
+        $s .= '    $this->'.$field->getName().' = (!is_null($'.$field->getName().') ? \mb_substr($'.$field->getName().', 0, ' . $field->getLength() . ') : null );'.PHP_EOL;
+
       } else {
         $s .= '    $this->'.$field->getName().' = $' . $field->getName() . ';'.PHP_EOL;
       }

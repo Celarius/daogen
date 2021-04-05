@@ -34,54 +34,54 @@ class Field
   public function __construct(string $fieldDef='', array $options=[])
   {
     # Remove double spaces
-    while (strpos($fieldDef, '  ') !== false) {
-      $fieldDef = str_replace('  ',' ',$fieldDef);
+    while (\strpos($fieldDef, '  ') !== false) {
+      $fieldDef = \str_replace('  ',' ',$fieldDef);
     }
 
     # Small fix for Firebird '( xx)' length fields
-    while (strpos($fieldDef, '( ') !== false) {
-      $fieldDef = str_replace('( ','(',$fieldDef);
+    while (\strpos($fieldDef, '( ') !== false) {
+      $fieldDef = \str_replace('( ','(',$fieldDef);
     }
 
-    $this->fieldDef = trim($fieldDef);
+    $this->fieldDef = \trim($fieldDef);
 
     # Explode the parts in the line
-    $parts = explode(' ',$fieldDef);
+    $parts = \explode(' ',$fieldDef);
 
     # Set Name
-    $this->name = strtolower($parts[0] ?? '');
-    $this->name = str_replace('"','',$this->name); // Remove enclosing "" chars
-    $this->name = str_replace('`','',$this->name); // Remove enclosing `` chars
+    $this->name = \strtolower($parts[0] ?? '');
+    $this->name = \str_replace('"','',$this->name); // Remove enclosing "" chars
+    $this->name = \str_replace('`','',$this->name); // Remove enclosing `` chars
 
     # Set type
     $this->type = $parts[1] ?? '';
 
     # Check for Length (if present)
-    if (strpos($this->type, '(') !== false) {
-      preg_match('/\((.*)\)/',trim($this->type),$match);
+    if (\strpos($this->type, '(') !== false) {
+      \preg_match('/\((.*)\)/',\trim($this->type),$match);
       $this->length = $match[1] ?? '';
-      preg_match('/(.*)\(/',trim($this->type),$match);
+      \preg_match('/(.*)\(/',\trim($this->type),$match);
       $this->type = $match[1] ?? '';
     }
 
     # Extract default
-    if (strpos($fieldDef, 'DEFAULT') !== false) {
-      $s = stristr($fieldDef, 'DEFAULT');
-      if (strpos($fieldDef, 'ON ') !== false)
-          $s = stristr($s, 'ON ', true);
-      preg_match('/ DEFAULT (.*)/',trim($s),$match);
+    if (\strpos($fieldDef, 'DEFAULT') !== false) {
+      $s = \stristr($fieldDef, 'DEFAULT');
+      if (\strpos($fieldDef, 'ON ') !== false)
+          $s = \stristr($s, 'ON ', true);
+      \preg_match('/ DEFAULT (.*)/',\trim($s),$match);
 
       # Filter away any ( or ) chars
-      $this->default = str_replace(['(',')'],'',$match[1] ?? '');
+      $this->default = \str_replace(['(',')'],'',$match[1] ?? '');
 
       # if the text contains CONVERT make it null (MSSQL strange thing)
-      if (strpos($this->default, 'CONVERT') !== false) {
+      if (\strpos($this->default, 'CONVERT') !== false) {
         $this->default = 'null';
       }
     }
 
     # Check for NOT NULL
-    if (strpos($fieldDef, 'NOT NULL') !== false) {
+    if (\strpos($fieldDef, 'NOT NULL') !== false) {
       $this->notNull = true;
     }
 
@@ -104,7 +104,7 @@ class Field
    */
   public function getName()
   {
-    return trim($this->name,'`');
+    return \trim($this->name,'`');
   }
 
   /**
@@ -114,7 +114,7 @@ class Field
    */
   public function getUcName()
   {
-    return ucwords($this->getName());
+    return \ucwords($this->getName());
   }
 
   /**
@@ -124,8 +124,8 @@ class Field
    */
   public function GetUcwName()
   {
-    $s = trim($this->getName(),'`');
-    return str_replace(' ','',ucwords(str_replace('_',' ',$s)));
+    $s = \trim($this->getName(),'`');
+    return \str_replace(' ','',\ucwords(\str_replace('_',' ',$s)));
   }
 
   /**
@@ -145,7 +145,7 @@ class Field
    */
   public function isInt()
   {
-    switch (strtoupper($this->getType())) {
+    switch (\strtoupper($this->getType())) {
       case 'TINYINT':
       case 'SMALLINT':
       case 'INTEGER':
@@ -165,7 +165,7 @@ class Field
    */
   public function isNumeric()
   {
-    switch (strtoupper($this->getType())) {
+    switch (\strtoupper($this->getType())) {
       case 'NUMERIC':
       case 'DECIMAL':
       case 'MONEY':
@@ -188,7 +188,7 @@ class Field
    */
   public function isText()
   {
-    switch (strtoupper($this->getType())) {
+    switch (\strtoupper($this->getType())) {
       case 'NVARCHAR':
       case 'VARCHAR':
       case 'NCHAR':
@@ -216,7 +216,7 @@ class Field
    */
   public function isDateTime()
   {
-    switch (strtoupper($this->getType())) {
+    switch (\strtoupper($this->getType())) {
       case 'TIMESTAMP':
       case 'DATETIME':
         return true;
@@ -247,8 +247,8 @@ class Field
   {
     $s = 'null';
 
-    if (strcasecmp($language,'json')==0) {
-      switch ( substr(strtoupper($this->getType()),0,8) ) {
+    if (\strcasecmp($language,'json')==0) {
+      switch ( \mb_substr(\strtoupper($this->getType()),0,8) ) {
         case 'NVARCHAR':
         case 'VARCHAR':
         case 'TEXT':
@@ -283,13 +283,13 @@ class Field
           break;
       }
     }
-    if (strcasecmp($language,'php')==0) {
+    if (\strcasecmp($language,'php')==0) {
 
-      if ( strlen($this->default) == 0 ) {
+      if ( \mb_strlen($this->default) == 0 ) {
 
         return 'null';
       } else
-      if ( strcasecmp($this->default,'CURRENT_TIMESTAMP') == 0 ) {
+      if ( \strcasecmp($this->default,'CURRENT_TIMESTAMP') == 0 ) {
 
         return ' (new \DateTime(\'@\'.time() ))->format(\'Y-m-d\TH:i:s\Z\') ';
       } else {
