@@ -18,27 +18,26 @@ use \App\Models\AbstractBaseEntity;
  */
 abstract class AbstractBaseDao implements AbstractBaseDaoInterface
 {
-  /** @var        string          The connection name */
+  /** @var  string          The connection name */
   protected $connectionName;
 
-  /** @var        array           The connection parameters (optional) */
+  /** @var  array           The connection parameters (optional) */
   protected $params;
 
-  /** @var        PdoConnection   The connection */
+  /** @var  PdoConnection   The connection */
   protected $connection;
 
-  /** @var        string          The table name */
+  /** @var  string          The table name */
   protected $table;
 
-  /** @var        int             The cache TTL for entity Items */
+  /** @var  int             The cache TTL for entity Items */
   protected $cacheTTL;
 
   /**
    * Constructor
    *
    * @param      string  $connectionName  Database ConnectionName
-   * @param      int     $cacheTTL        Seconds to Cache the entries.
-   *                                      0=Forever, -1=Do not cache
+   * @param      int     $cacheTTL        Seconds to Cache the entries. 0=Forever, -1=Do not cache
    * @param      array   $params          The connection parameters (optional)
    */
   public function __construct(string $connectionName='', int $cacheTTL=-1, array $params=[])
@@ -693,9 +692,9 @@ abstract class AbstractBaseDao implements AbstractBaseDaoInterface
    *
    * @param      string  $connectionName
    *
-   * @return     null    | PdoConnectionInterface
+   * @return     ?PdoConnection
    */
-  public function getConnection(string $connectionName='')
+  public function getConnection(string $connectionName=''): ?PdoConnection
   {
     # Obtain the connection from helper function db()
     return \db( (empty($connectionName) ? $this->connectionName : $connectionName), $this->params );
@@ -704,11 +703,11 @@ abstract class AbstractBaseDao implements AbstractBaseDaoInterface
   /**
    * Set the DB connection
    *
-   * @param      PdoConnectionInterface  $connection
+   * @param      PdoConnection  $connection
    *
    * @return     self
    */
-  public function setConnection(?PdoConnectionInterface $connection)
+  public function setConnection(?PdoConnection $connection)
   {
     $this->connection = $connection;
 

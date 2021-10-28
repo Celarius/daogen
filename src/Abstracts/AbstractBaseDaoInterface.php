@@ -30,8 +30,8 @@ interface AbstractBaseDaoInterface
   function update(AbstractBaseEntity $item): bool;
   function delete(AbstractBaseEntity &$item): bool;
 
-  function getConnection(string $connectionName='');
-  function setConnection(?PdoConnectionInterface $connection);
+  function getConnection(string $connectionName=''): ?PdoConnection;
+  function setConnection(?PdoConnection $connection);
 
   function beginTransaction();
   function commit();

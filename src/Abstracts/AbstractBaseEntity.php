@@ -7,7 +7,7 @@ abstract class AbstractBaseEntity
   /**
    * Constructor
    *
-   * @param array $args [description]
+   * @param   mixed $args     Arguments
    */
   public function __construct($args=null)
   {
@@ -26,6 +26,8 @@ abstract class AbstractBaseEntity
 
   /**
    * Clear properties
+   *
+   * @return self
    */
   public function clear()
   {
@@ -35,25 +37,29 @@ abstract class AbstractBaseEntity
   /**
    * Return properties as Array
    *
-   * @return array              Array with properties
+   * @param   array $fields      Array with fields
+   *
+   * @return  array              Array with properties
    */
-  abstract public function fromArray(array $fields);
+  abstract public function fromArray(array $fields): array;
 
   /**
    * Return properties as Array
    *
-   * @param  array $exclude     Array with fields to exclude from final output
-   * @return array              Array with properties
+   * @param   array $exclude     Array with fields to exclude from final output
+   *
+   * @return  array              Array with properties
    */
   abstract public function asArray(array $excluded=[]): array;
 
   /**
    * Decode a JSON document into the properties
    *
-   * @param  string $json
-   * @return self
+   * @param   string $json
+   *
+   * @return  array
    */
-  public function fromJson(string $json)
+  public function fromJson(string $json): array
   {
     return $this->fromArray( \json_decode($json,true) );
   }
@@ -61,9 +67,12 @@ abstract class AbstractBaseEntity
   /**
    * Return properties as JSON document
    *
-   * @return string             JSON Document
+   * @param   array $exclude      Array keys to exclude from returned JSON
+   * @param   int   $options      JSON encode options. Ex. `\JSON_PRETTY_PRINT | \JSON_NUMERIC_CHECK`
+   *
+   * @return  string              JSON Document
    */
-  public function asJson(array $exclude=[], $options=JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK): string
+  public function asJson(array $exclude=[], int $options=0): ?string
   {
     return \json_encode($this->asArray($exclude), $options);
   }
