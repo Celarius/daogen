@@ -204,8 +204,7 @@ class Entity
         // $s .= '      $d->setTimeZone(new \DateTimeZone("UTC"));'.PHP_EOL;
         $s .= '      $this->'.$field->getName().' = $d->format("Y-m-d\TH:i:s\Z");'.PHP_EOL;
         $s .= '    }'.PHP_EOL;
-      } elseif ($field->isText()) {
-        // $s .= '    $this->'.$field->getName().' = \mb_substr( ($'.$field->getName().' ?? \'\'), 0, ' . $field->getLength() . ' );'.PHP_EOL;
+      } elseif ($field->isText() && !empty($field->getLength())) {
         $s .= '    $this->'.$field->getName().' = (!is_null($'.$field->getName().') ? \mb_substr($'.$field->getName().', 0, ' . $field->getLength() . ') : null );'.PHP_EOL;
 
       } else {
