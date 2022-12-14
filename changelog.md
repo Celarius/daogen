@@ -1,5 +1,9 @@
 # DaoGen Changelog
 
+## 0.5.21
+* Root namespaces on php functions
+* Fixes CASE_LOWER for array_key_change_case()
+
 ## 0.5.20
 * entity generation bug fix for TEXT, LONGTEXT type of fields (set<Field>() methods use mb_substr() with length)
 

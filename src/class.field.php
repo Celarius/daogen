@@ -302,6 +302,44 @@ class Field
   }
 
   /**
+   * Returns the PHP type of a DB type
+   *
+   * @return     string  The PHP type
+   */
+  public function getPhpType()
+  {
+    switch ( \mb_substr(\strtoupper($this->getType()),0,8) ) {
+      case 'NVARCHAR':
+      case 'VARCHAR':
+      case 'TEXT':
+      case 'MEDIUMTE':
+      case 'LONGTEXT':
+      case 'BLOB':
+      case 'DATE':
+      case 'TIME':
+      case 'TIMESTAM':
+      case 'DATETIME':
+        $s = 'string';
+        break;
+      case 'BIGINT':
+      case 'SMALLINT':
+      case 'INT':
+      case 'INTEGER':
+      case 'NUMERIC':
+      case 'DECIMAL':
+      case 'FLOAT':
+        $s = 'int';
+        break;
+      default:
+        $s = 'mixed';
+        break;
+    }
+
+    return $s;
+  }
+
+
+  /**
    * Gets not null.
    *
    * @return     <type>  Not null.

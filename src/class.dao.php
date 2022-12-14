@@ -119,11 +119,11 @@ class Dao {
     $s .= '   * Make/Generate an Entity'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
     $s .= '   * @param  array  $fields             Array with key=value for fields'.PHP_EOL;
-    $s .= '   * @return object'.PHP_EOL;
+    $s .= '   * @return AbstractBaseEntity'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
     $s .= '  function makeEntity(array $fields=[]): AbstractBaseEntity'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
-    $s .= '    $item = new '.$this->table->getclassName().'Entity(array_change_key_case($fields),CASE_LOWER);'.PHP_EOL;
+    $s .= '    $item = new '.$this->table->getclassName().'Entity(\array_change_key_case($fields, \CASE_LOWER));'.PHP_EOL;
     $s .= '    $this->cacheSetItem($item);'.PHP_EOL;
     $s .= PHP_EOL;
     $s .= '    return $item;'.PHP_EOL;
@@ -178,7 +178,7 @@ class Dao {
     # conditions
     foreach ($this->table->getFields() as $field)
     {
-      $s .= '    if (isset($keywords[\''.$field->getName().'\']) && strlen($keywords[\''.$field->getName().'\'])>0) {'.PHP_EOL;
+      $s .= '    if (isset($keywords[\''.$field->getName().'\']) && \strlen($keywords[\''.$field->getName().'\'])>0) {'.PHP_EOL;
       if ($field->isText()) {
         $s .= '      $where .= \'AND ('.$field->getName().' LIKE :'.strtoupper($field->getName()).') \';'.PHP_EOL;
       } else {
@@ -190,17 +190,17 @@ class Dao {
     }
 
     $s .= '    if (!empty($where))'.PHP_EOL;
-    $s .= '      $where = \'WHERE \'.preg_replace(\'/^AND /\', \'\', $where);'.PHP_EOL;
+    $s .= '      $where = \'WHERE \'.\preg_replace(\'/^AND /\', \'\', $where);'.PHP_EOL;
     $s .= PHP_EOL;
     $s .= '    if (!empty($keywords[\'order\'])) // Note here that we use the $keyword[\'order\'] directly in SQL string.'.PHP_EOL;
     $s .= '      $order = \' ORDER BY \'.$keywords[\'order\'];'.PHP_EOL;
     $s .= PHP_EOL;
 
     $s .= '    if (!empty($keywords[\'limit\'])) { // Note here that we use the $keyword[\'limit\'] directly in SQL string.'.PHP_EOL;
-    $s .= '      if (strcasecmp(\'mysql\',$this->getConnection()->getDriver())==0) {'.PHP_EOL;
+    $s .= '      if (\strcasecmp(\'mysql\',$this->getConnection()->getDriver())==0) {'.PHP_EOL;
     $s .= '        $limit = \' LIMIT \'.$keywords[\'limit\'];'.PHP_EOL;
     $s .= '      } else '.PHP_EOL;
-    $s .= '      if (strcasecmp(\'firebird\',$this->getConnection()->getDriver())==0) {'.PHP_EOL;
+    $s .= '      if (\strcasecmp(\'firebird\',$this->getConnection()->getDriver())==0) {'.PHP_EOL;
     $s .= '        $limit = \' ROWS \'.$keywords[\'limit\'];'.PHP_EOL;
     $s .= '      }'.PHP_EOL;
     $s .= '    }'.PHP_EOL;
