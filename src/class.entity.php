@@ -101,7 +101,7 @@ class Entity
 
     # Fields
     foreach ($this->table->getFields() as $field) {
-      $s .= mb_str_pad('  protected $'.$field->getName().';',48,' ',STR_PAD_RIGHT).'// '.$field->getFieldDef().PHP_EOL;
+      $s .= str_pad('  protected $'.$field->getName().';',48,' ',STR_PAD_RIGHT).'// '.$field->getFieldDef().PHP_EOL;
     }
     $s .= PHP_EOL;
 

@@ -19,7 +19,7 @@ class Table
   protected $ddl = '';
   protected $tableName = '';
   protected $className = '';
-  protected $fields = null;
+  protected $fields = [];
 
   /**
    * Constructor
@@ -122,7 +122,7 @@ class Table
   /**
    * Get all fields
    *
-   * @return array
+   * @return  array
    */
   public function getFields()
   {

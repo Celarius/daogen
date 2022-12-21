@@ -20,7 +20,7 @@ class Database
 {
   protected $name;
   protected $type;
-  protected $tables = null;
+  protected $tables = [];
 
   /**
    * Constructor
@@ -64,7 +64,7 @@ class Database
     return $this->name;
   }
 
-  public function getTables()
+  public function getTables(): array
   {
     return $this->tables;
   }

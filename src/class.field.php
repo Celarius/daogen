@@ -90,7 +90,7 @@ class Field
   /**
    * Gets the field definition.
    *
-   * @return     <type>  The field definition.
+   * @return  string                  The field definition.
    */
   public function getFieldDef()
   {
@@ -100,7 +100,7 @@ class Field
   /**
    * Gets the name.
    *
-   * @return     <type>  The name.
+   * @return  string                  The name.
    */
   public function getName()
   {
@@ -110,7 +110,7 @@ class Field
   /**
    * Gets the uc name.
    *
-   * @return     <type>  The uc name.
+   * @return  string                  The uc name.
    */
   public function getUcName()
   {
@@ -120,7 +120,7 @@ class Field
   /**
    * Gets the ucw name.
    *
-   * @return     <type>  The ucw name.
+   * @return  string                  The ucw name.
    */
   public function GetUcwName()
   {
@@ -131,7 +131,7 @@ class Field
   /**
    * Gets the type.
    *
-   * @return     <type>  The type.
+   * @return  string                  The type.
    */
   public function getType()
   {
@@ -152,7 +152,6 @@ class Field
       case 'BIGINT':
       case 'INT':
         return true;
-        break;
     }
 
     return false;
@@ -175,7 +174,6 @@ class Field
       case 'DOUBLE':
       case 'REAL':
         return true;
-        break;
     }
 
     return false;
@@ -203,7 +201,6 @@ class Field
       case 'LONGTEXT':
       case 'MULTILINETEXT':
         return true;
-        break;
     }
 
     return false;
@@ -220,7 +217,6 @@ class Field
       case 'TIMESTAMP':
       case 'DATETIME':
         return true;
-        break;
     }
 
     return false;
@@ -342,7 +338,7 @@ class Field
   /**
    * Gets not null.
    *
-   * @return     <type>  Not null.
+   * @return     bool  Not null.
    */
   public function getNotNull()
   {
