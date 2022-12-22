@@ -695,7 +695,7 @@ abstract class AbstractBaseDao implements AbstractBaseDaoInterface
    *
    * @return     null|PdoConnection
    */
-  public function getConnection(string $connectionName='')
+  public function getConnection(string $connectionName=''): ?PdoConnection
   {
     # Obtain the connection from helper function db()
     return \db( (empty($connectionName) ? $this->connectionName : $connectionName), $this->params );
