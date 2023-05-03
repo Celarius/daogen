@@ -67,6 +67,7 @@ class Table
       while($count>0) {
         $line = str_replace('  ',' ',trim($line),$count);
       }
+      if (empty(trim($line))) continue;
       if (trim($line)==='(') continue;
       if (substr(trim($line),0,1)===')') break;
       if (substr(trim($line),0,11)==='PRIMARY KEY') break;
