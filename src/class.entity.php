@@ -148,10 +148,10 @@ class Entity
     $s .= '   *'.PHP_EOL;
     $s .= '   * @return   self'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
-    $s .= '  public function fromArray(array $a)'.PHP_EOL;
+    $s .= '  public function fromArray(array $array)'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
     foreach ($this->table->getFields() as $field) {
-      $s .= '    $this->set'.$field->getUcwName().'($a[\''.$field->getName().'\'] ?? '.$field->getDefault('php').');'.PHP_EOL;
+      $s .= '    $this->set'.$field->getUcwName().'($array[\''.$field->getName().'\'] ?? '.$field->getDefault('php').');'.PHP_EOL;
     }
     $s .= PHP_EOL;
     $s .= '    return $this;'.PHP_EOL;
