@@ -146,12 +146,14 @@ class Entity
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Set properties from array'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
+    $s .= '   * @param    $fields     Array of fields'.PHP_EOL;
+    $s .= '   *'.PHP_EOL;
     $s .= '   * @return   self'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
-    $s .= '  public function fromArray(array $array)'.PHP_EOL;
+    $s .= '  public function fromArray(array $fields)'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
     foreach ($this->table->getFields() as $field) {
-      $s .= '    $this->set'.$field->getUcwName().'($array[\''.$field->getName().'\'] ?? '.$field->getDefault('php').');'.PHP_EOL;
+      $s .= '    $this->set'.$field->getUcwName().'($fields[\''.$field->getName().'\'] ?? '.$field->getDefault('php').');'.PHP_EOL;
     }
     $s .= PHP_EOL;
     $s .= '    return $this;'.PHP_EOL;
