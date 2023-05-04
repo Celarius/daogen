@@ -1,6 +1,9 @@
 # DaoGen Changelog
 
 ## 0.5.21
+* Corrections in entity creation and abstract files
+
+## 0.5.21
 * Root namespaces on php functions
 * Fixes CASE_LOWER for array_key_change_case()
 
