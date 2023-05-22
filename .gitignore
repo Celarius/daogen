@@ -2,3 +2,4 @@
 /src/composer.phar
 /src/composer.lock
 desktop.ini
+.phpunit.result.cache
