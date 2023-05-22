@@ -99,6 +99,11 @@ class Controller
     }
     $s .= PHP_EOL;
 
+    $s .= '# Guzzle'.PHP_EOL;
+    $s .= 'use \GuzzleHttp\Psr7\Request;'.PHP_EOL;
+    $s .= 'use \GuzzleHttp\Psr7\Response;'.PHP_EOL;
+    $s .= PHP_EOL;
+
     $s .= '# Entity & Model'.PHP_EOL;
     $s .= 'use \\App\\Models'.$this->namespace.'\\'.$this->table->getClassName().'Entity;'.PHP_EOL;
     $s .= 'use \\App\\Models'.$this->namespace.'\\Db\\'.$this->table->getClassName().'Dao;'.PHP_EOL;
@@ -118,6 +123,10 @@ class Controller
     // $s .= '    parent::initialize($args);'.PHP_EOL;
     // $s .= '  }'.PHP_EOL;
     // $s .= PHP_EOL;
+
+    $s .= ' /** @var  array Payload data */'.PHP_EOL;
+    $s .= ' protected $body;'.PHP_EOL;
+    $s .= PHP_EOL;
 
     #
     # Verify GET
@@ -459,6 +468,9 @@ class Controller
     $s .= PHP_EOL;
 
     $s .= '    # Load the Entity to delete'.PHP_EOL;
+    if ($this->table->hasField('id')) {
+      $s .= '    $entity = (new '.$this->table->getClassName().'Dao())->fetchBy(\'id\',$args[\'id\']);'.PHP_EOL;
+    } else
     if ($this->table->hasField('uuid')) {
       $s .= '    $entity = (new '.$this->table->getClassName().'Dao())->fetchBy(\'uuid\',$args[\'uuid\']);'.PHP_EOL;
     } else
