@@ -11,7 +11,7 @@
 
 ##############################################################################################################
 
-$daoGenVersion = '0.5.22';
+$daoGenVersion = '0.5.23';
 
 require_once 'includes/includes.php';
 require_once 'class.database.php';
