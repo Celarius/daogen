@@ -468,14 +468,14 @@ class Controller
     $s .= PHP_EOL;
 
     $s .= '    # Load the Entity to delete'.PHP_EOL;
-    if ($this->table->hasField('id')) {
-      $s .= '    $entity = (new '.$this->table->getClassName().'Dao())->fetchBy(\'id\',$args[\'id\']);'.PHP_EOL;
-    } else
     if ($this->table->hasField('uuid')) {
       $s .= '    $entity = (new '.$this->table->getClassName().'Dao())->fetchBy(\'uuid\',$args[\'uuid\']);'.PHP_EOL;
     } else
     if ($this->table->hasField('code')) {
       $s .= '    $entity = (new '.$this->table->getClassName().'Dao())->fetchBy(\'code\',$args[\'code\']);'.PHP_EOL;
+    } else
+    if ($this->table->hasField('id')) {
+      $s .= '    $entity = (new '.$this->table->getClassName().'Dao())->fetchBy(\'id\',$args[\'id\']);'.PHP_EOL;
     }
     $s .= PHP_EOL;
     $s .= '    # Report error if no entity found'.PHP_EOL;
