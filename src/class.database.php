@@ -46,6 +46,10 @@ class Database
     # Loop all Table Definitions
     while ($ddl = stristr($ddl, 'CREATE TABLE'))
     {
+      # Delete anyting before the 1st occurance of 'CREATE TABLE'
+      $deleteUntil = stripos($ddl, 'CREATE TABLE');
+      $ddl = substr($ddl, $deleteUntil);
+
       # Extract the Tables DDL
       if ( ($table_ddl = stristr($ddl, ';', true)) === false) {
         $table_ddl = $ddl;

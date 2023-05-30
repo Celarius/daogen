@@ -184,14 +184,14 @@ class Controller
     }
     $s .= PHP_EOL;
     $s .= '    if (is_null($items)) {'.PHP_EOL;
-    $s .= '      return responseJsonError(\'Not found\',\'\',404);'.PHP_EOL;
+    $s .= '      return \\responseJsonError(\'Not found\',\'\',404);'.PHP_EOL;
     $s .= '    }'.PHP_EOL;
     $s .= PHP_EOL;
     $s .= '    $data = [];'.PHP_EOL;
     $s .= '    foreach ($items as $item)'.PHP_EOL;
     $s .= '      $data[] = $item->asArray([\'id\']);'.PHP_EOL;
     $s .= PHP_EOL;
-    $s .= '    return responseJson($data);'.PHP_EOL;
+    $s .= '    return \\responseJson($data);'.PHP_EOL;
     $s .= '  }'.PHP_EOL;
     $s .= PHP_EOL;
 
@@ -208,27 +208,27 @@ class Controller
     $s .= '  public function verifyPOST(array $args)'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
     $s .= '    # Validate HTTP Request "Content-type"'.PHP_EOL;
-    $s .= '    if (!preg_match(\'/application\/json/i\',(getRequest()->getHeader(\'Content-Type\')[0] ?? \'\'))) {'.PHP_EOL;
-    $s .= '      return responseJsonError(\'Bad request\',\'Content-Type must be "application-json"\',400);'.PHP_EOL;
+    $s .= '    if (!\\preg_match(\'/application\/json/i\',(\\getRequest()->getHeader(\'Content-Type\')[0] ?? \'\'))) {'.PHP_EOL;
+    $s .= '      return \\responseJsonError(\'Bad request\',\'Content-Type must be "application-json"\',400);'.PHP_EOL;
     $s .= '    }'.PHP_EOL;
     $s .= PHP_EOL;
     $s .= '    # Decode payload'.PHP_EOL;
-    $s .= '    $this->body = (json_decode(getRequest()->getBody()->getContents(),true) ?? []);'.PHP_EOL;
-    $s .= '    if (count($this->body)==0) {'.PHP_EOL;
-    $s .= '      return responseJsonError(\'Bad request\',\'Invalid post body\',400);'.PHP_EOL;
+    $s .= '    $this->body = (\\json_decode(\\getRequest()->getBody()->getContents(),true) ?? []);'.PHP_EOL;
+    $s .= '    if (\\count($this->body)==0) {'.PHP_EOL;
+    $s .= '      return \\responseJsonError(\'Bad request\',\'Invalid post body\',400);'.PHP_EOL;
     $s .= '    }'.PHP_EOL;
     if ($this->table->hasField('code')) {
       $s .= PHP_EOL;
       $s .= '    # Verify code'.PHP_EOL;
       $s .= '    if (empty($this->body[\'code\'] ?? \'\')) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Bad request\',\'{code} must be specified\',400);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Bad request\',\'{code} must be specified\',400);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
     }
     if ($this->table->hasField('name')) {
       $s .= PHP_EOL;
       $s .= '    # Verify name'.PHP_EOL;
       $s .= '    if (empty($this->body[\'name\'] ?? \'\')) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Bad request\',\'{name} must be specified\',400);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Bad request\',\'{name} must be specified\',400);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
     }
     $s .= PHP_EOL;
@@ -263,14 +263,14 @@ class Controller
       $s .= '    # Check if a previous the item exists'.PHP_EOL;
       $s .= '    $x = (new '.$this->table->getClassName().'Dao())->fetchBy(\'uuid\',$entity->getUuid());'.PHP_EOL;
       $s .= '    if ( isset($x) ) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Bad request\',\'An item with {uuid} already exists\',400);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Bad request\',\'An item with {uuid} already exists\',400);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
     } else
     if ($this->table->hasField('code')) {
       $s .= '    # Check if a previous the item exists'.PHP_EOL;
       $s .= '    $x = (new '.$this->table->getClassName().'Dao())->fetchBy(\'code\',$entity->getCode());'.PHP_EOL;
       $s .= '    if ( isset($x) ) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Bad request\',\'An item with {code} already exists\',400);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Bad request\',\'An item with {code} already exists\',400);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
     }
     $s .= '    // .. there might be other fields that need to be checked?'.PHP_EOL;
@@ -280,12 +280,12 @@ class Controller
     $s .= '    $ok = (new '.$this->table->getClassName().'Dao())->insert($entity);'.PHP_EOL;
     $s .= PHP_EOL;
     $s .= '    if (!$ok) {'.PHP_EOL;
-    $s .= '      logger()->error(\'Failed to insert into database\',[\'rid\'=>container(\'requestId\'), \'entity\'=>$entity->asArray()]);'.PHP_EOL;
+    $s .= '      \\logger()->error(\'Failed to insert into database\',[\'rid\'=>\\container(\'requestId\'), \'entity\'=>$entity->asArray()]);'.PHP_EOL;
     $s .= PHP_EOL;
-    $s .= '      return responseJsonError(\'Failed to insert item\',\'\',500);'.PHP_EOL;
+    $s .= '      return \\responseJsonError(\'Failed to insert item\',\'\',500);'.PHP_EOL;
     $s .= '    }'.PHP_EOL;
     $s .= PHP_EOL;
-    $s .= '    return responseJson($entity->asArray([\'id\']));'.PHP_EOL;
+    $s .= '    return \\responseJson($entity->asArray([\'id\']));'.PHP_EOL;
     $s .= '  }'.PHP_EOL;
     $s .= PHP_EOL;
 
@@ -303,49 +303,49 @@ class Controller
     $s .= '  public function verifyPUT(array $args)'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
     $s .= '    # Validate HTTP Request "Content-type"'.PHP_EOL;
-    $s .= '    if (!preg_match(\'/application\/json/i\',(getRequest()->getHeader(\'Content-Type\')[0] ?? \'\'))) {'.PHP_EOL;
-    $s .= '      return responseJsonError(\'Bad request\',\'Content-Type must be "application-json"\',400);'.PHP_EOL;
+    $s .= '    if (!\\preg_match(\'/application\/json/i\',(\\getRequest()->getHeader(\'Content-Type\')[0] ?? \'\'))) {'.PHP_EOL;
+    $s .= '      return \\responseJsonError(\'Bad request\',\'Content-Type must be "application-json"\',400);'.PHP_EOL;
     $s .= '    }'.PHP_EOL;
     $s .= PHP_EOL;
     $s .= '    # Decode payload'.PHP_EOL;
-    $s .= '    $this->body = (json_decode((string)getRequest()->getBody()->getContents(),true) ?? []);'.PHP_EOL;
-    $s .= '    if (count($this->body)==0) {'.PHP_EOL;
-    $s .= '      return responseJsonError(\'Bad request\',\'Invalid post body\',400);'.PHP_EOL;
+    $s .= '    $this->body = (\\json_decode((string)\\getRequest()->getBody()->getContents(),true) ?? []);'.PHP_EOL;
+    $s .= '    if (\\count($this->body)==0) {'.PHP_EOL;
+    $s .= '      return \\responseJsonError(\'Bad request\',\'Invalid post body\',400);'.PHP_EOL;
     $s .= '    }'.PHP_EOL;
     $s .= PHP_EOL;
     if ($this->table->hasField('uuid')) {
       $s .= '    # The uuid we want to update'.PHP_EOL;
       $s .= '    if (empty($args[\'uuid\'] ?? \'\') ) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Bad request\',\'Query parameter {uuid} must be specified\',400);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Bad request\',\'Query parameter {uuid} must be specified\',400);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
       $s .= PHP_EOL;
       $s .= '    # Load the existing entity'.PHP_EOL;
       $s .= '    $entity = (new '.$this->table->getClassName().'Dao())->fetchBy(\'uuid\',$args[\'uuid\']);'.PHP_EOL;
       $s .= '    if (!$entity) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Not found\',\'Item with {uuid} not found\',404);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Not found\',\'Item with {uuid} not found\',404);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
     } else
     if ($this->table->hasField('code')) {
       $s .= '    # The code we want to update'.PHP_EOL;
       $s .= '    if (empty($args[\'code\'] ?? \'\') ) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Bad request\',\'Query parameter {code} must be specified\',400);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Bad request\',\'Query parameter {code} must be specified\',400);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
       $s .= PHP_EOL;
       $s .= '    $entity = (new '.$this->table->getClassName().'Dao())->fetchBy(\'code\',$args[\'code\']);'.PHP_EOL;
       $s .= '    if (!$entity) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Not found\',\'Item with {code} not found\',404);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Not found\',\'Item with {code} not found\',404);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
     }
     $s .= PHP_EOL;
     $s .= '    # Verify params'.PHP_EOL;
     if ($this->table->hasField('code')) {
       $s .= '    if (empty($this->body[\'code\'] ?? \'\')) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Bad request\',\'{code} must be specified\',400);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Bad request\',\'{code} must be specified\',400);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
     }
     if ($this->table->hasField('name')) {
       $s .= '    if (empty($this->body[\'name\'] ?? \'\')) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Bad request\',\'{name} must be specified\',400);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Bad request\',\'{name} must be specified\',400);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
     }
     $s .= '    // .. there are more fields that need verification?'.PHP_EOL;
@@ -386,10 +386,10 @@ class Controller
 
     if ($this->table->hasField('code')) {
       $s .= '    # Check if new `code` exists (only if different from old)'.PHP_EOL;
-      $s .= '    if ( strcasecmp($entity->getCode(), $this->body[\'code\']) != 0) {'.PHP_EOL;
+      $s .= '    if ( \\strcasecmp($entity->getCode(), $this->body[\'code\']) != 0) {'.PHP_EOL;
       $s .= '      $x = (new '.$this->table->getClassName().'Dao())->fetchBy(\'code\',$this->body[\'code\']);'.PHP_EOL;
       $s .= '      if ( isset($x) ) {'.PHP_EOL;
-      $s .= '        return responseJsonError(\'Bad request\',\'An item with {code} already exists\',400);'.PHP_EOL;
+      $s .= '        return \\responseJsonError(\'Bad request\',\'An item with {code} already exists\',400);'.PHP_EOL;
       $s .= '      }'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
       $s .= PHP_EOL;
@@ -412,12 +412,12 @@ class Controller
     $s .= '    $ok = (new '.$this->table->getClassName().'Dao())->update($entity);'.PHP_EOL;
     $s .= PHP_EOL;
     $s .= '    if (!$ok) {'.PHP_EOL;
-    $s .= '      logger()->error(\'Failed to update in database\',[\'rid\'=>app(\'requestId\'), \'entity\'=>$entity->asArray()]);'.PHP_EOL;
+    $s .= '      \\logger()->error(\'Failed to update in database\',[\'rid\'=>\\app(\'requestId\'), \'entity\'=>$entity->asArray()]);'.PHP_EOL;
     $s .= PHP_EOL;
-    $s .= '      return responseJsonError(\'Failed to update item\',\'\',500);'.PHP_EOL;
+    $s .= '      return \\responseJsonError(\'Failed to update item\',\'\',500);'.PHP_EOL;
     $s .= '    }'.PHP_EOL;
     $s .= PHP_EOL;
-    $s .= '    return responseJson($entity->asArray([\'id\']));'.PHP_EOL;
+    $s .= '    return \\responseJson($entity->asArray([\'id\']));'.PHP_EOL;
     $s .= '  }'.PHP_EOL;
     $s .= PHP_EOL;
 
@@ -437,13 +437,13 @@ class Controller
 
     if ($this->table->hasField('uuid')) {
       $s .= '    if (empty($args[\'uuid\'] ?? null) ) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Bad request\',\'{uuid} is mandatory\',400);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Bad request\',\'{uuid} is mandatory\',400);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
     } else
     if ($this->table->hasField('code')) {
       $s .= '    # Sanity check'.PHP_EOL;
       $s .= '    if (empty($args[\'code\'] ?? null) ) {'.PHP_EOL;
-      $s .= '      return responseJsonError(\'Bad request\',\'{code} is mandatory\',400);'.PHP_EOL;
+      $s .= '      return \\responseJsonError(\'Bad request\',\'{code} is mandatory\',400);'.PHP_EOL;
       $s .= '    }'.PHP_EOL;
     }
     $s .= PHP_EOL;
@@ -480,19 +480,19 @@ class Controller
     $s .= PHP_EOL;
     $s .= '    # Report error if no entity found'.PHP_EOL;
     $s .= '    if (!$entity) {'.PHP_EOL;
-    $s .= '      return responseJsonError(\'Not found\',\'\',404);'.PHP_EOL;
+    $s .= '      return \\responseJsonError(\'Not found\',\'\',404);'.PHP_EOL;
     $s .= '    }'.PHP_EOL;
     $s .= PHP_EOL;
     $s .= '    # Delete'.PHP_EOL;
     $s .= '    $ok = (new '.$this->table->getClassName().'Dao())->delete($entity);'.PHP_EOL;
     $s .= PHP_EOL;
     $s .= '    if (!$ok) {'.PHP_EOL;
-    $s .= '      logger()->error(\'Failed to delete in database\', [\'rid\'=>app(\'requestId\'), \'entity\'=>$entity->asArray()]);'.PHP_EOL;
+    $s .= '      \\logger()->error(\'Failed to delete in database\', [\'rid\'=>\\app(\'requestId\'), \'entity\'=>$entity->asArray()]);'.PHP_EOL;
     $s .= PHP_EOL;
-    $s .= '      return responseJsonError(\'Internal error\',\'Failed to delete entity\',500);'.PHP_EOL;
+    $s .= '      return \\responseJsonError(\'Internal error\',\'Failed to delete entity\',500);'.PHP_EOL;
     $s .= '    }'.PHP_EOL;
     $s .= PHP_EOL;
-    $s .= '    return response(\'\',204);'.PHP_EOL;
+    $s .= '    return \\response(\'\',204);'.PHP_EOL;
     $s .= '  }'.PHP_EOL;
     $s .= PHP_EOL;
 
