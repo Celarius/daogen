@@ -50,6 +50,7 @@ class Table
     $_tableName = str_replace('.',' ',$_tableName);
     $_tableName = str_replace('`','',$_tableName);
     $_tableName = str_replace('if not exists','',$_tableName);
+    $this->tableName = $_tableName;
 
     # Convert _ to Spaces, UCWords it and remove the spaces
     $this->className = str_replace(' ','',ucwords($_tableName));
