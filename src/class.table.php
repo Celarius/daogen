@@ -38,6 +38,10 @@ class Table
     $this->namespace = $this->formatNamespace($options['namespace'] ?? '');
     $this->database = $database;
 
+    # Delete anyting before the 1st occurance of 'CREATE TABLE'
+    $deleteUntil = stripos($ddl, 'CREATE TABLE');
+    $ddl = substr($ddl, $deleteUntil);
+
     # Store the Tables full name
     preg_match('/CREATE TABLE (.*)\s*\(/',trim($ddl),$match);
 
