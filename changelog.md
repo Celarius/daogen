@@ -2,6 +2,7 @@
 
 ## 0.5.24
 * Sanitize `order` and `limit` keywords in SQL statements (Prevent SQL injection)
+* Fixes in table name generation, preserving _ in table names for SQL statements
 
 ## 0.5.23
 * In controller class, added guzzle, initialized body variable & fixed handleDelete method

@@ -45,12 +45,15 @@ class Table
     # Store the Tables full name
     preg_match('/CREATE TABLE (.*)\s*\(/',trim($ddl),$match);
 
+    # Create tableName
     $this->tableName = trim(strtolower($match[1] ?? ''));
+    $this->tableName = str_replace('if not exists','',$this->tableName);
+    $this->tableName = \trim($this->tableName);
+
+    # Further trim the name
     $_tableName = str_replace('_',' ',$this->tableName);
     $_tableName = str_replace('.',' ',$_tableName);
     $_tableName = str_replace('`','',$_tableName);
-    $_tableName = str_replace('if not exists','',$_tableName);
-    $this->tableName = \trim($_tableName);
 
     # Convert _ to Spaces, UCWords it and remove the spaces
     $this->className = str_replace(' ','',ucwords($_tableName));
