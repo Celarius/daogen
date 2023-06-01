@@ -1,7 +1,10 @@
 # DaoGen Changelog
 
+## 0.5.24
+* Sanitize `order` and `limit` keywords in SQL statements (Prevent SQL injection)
+
 ## 0.5.23
-* In controller class, added guzzle, initialized body variable & fixed handleDelete method 
+* In controller class, added guzzle, initialized body variable & fixed handleDelete method
 
 ## 0.5.22
 * Corrections in entity creation and abstract files

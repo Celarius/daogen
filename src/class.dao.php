@@ -192,11 +192,22 @@ class Dao {
     $s .= '    if (!empty($where))'.PHP_EOL;
     $s .= '      $where = \'WHERE \'.\preg_replace(\'/^AND /\', \'\', $where);'.PHP_EOL;
     $s .= PHP_EOL;
-    $s .= '    if (!empty($keywords[\'order\'])) // Note here that we use the $keyword[\'order\'] directly in SQL string.'.PHP_EOL;
+
+    $s .= '    // Sanitize `order` and `limit` keywords'.PHP_EOL;
+    $s .= '    if (\array_key_exists(\'order\',$keywords) && !empty($keywords[\'order\'])) {'.PHP_EOL;
+    $s .= '      $keywords[\'order\'] = \preg_replace("/[^a-zA-Z0-9_,-.]/", "", $keywords[\'order\']);'.PHP_EOL;
+    $s .= '    }'.PHP_EOL;
+    $s .= PHP_EOL;
+    $s .= '    if (\array_key_exists(\'limit\',$keywords) && !empty($keywords[\'limit\'])) {'.PHP_EOL;
+    $s .= '      $keywords[\'limit\'] = \preg_replace("/[^a-zA-Z0-9_,-.]/", "", $keywords[\'limit\']);'.PHP_EOL;
+    $s .= '    }'.PHP_EOL;
+    $s .= PHP_EOL;
+
+    $s .= '    if (!empty($keywords[\'order\']) && \is_string($keywords[\'order\'])) '.PHP_EOL;
     $s .= '      $order = \' ORDER BY \'.$keywords[\'order\'];'.PHP_EOL;
     $s .= PHP_EOL;
 
-    $s .= '    if (!empty($keywords[\'limit\'])) { // Note here that we use the $keyword[\'limit\'] directly in SQL string.'.PHP_EOL;
+    $s .= '    if (!empty($keywords[\'limit\']) && \is_numeric($keywords[\'limit\'])) { '.PHP_EOL;
     $s .= '      if (\strcasecmp(\'mysql\',$this->getConnection()->getDriver())==0) {'.PHP_EOL;
     $s .= '        $limit = \' LIMIT \'.$keywords[\'limit\'];'.PHP_EOL;
     $s .= '      } else '.PHP_EOL;
