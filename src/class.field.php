@@ -281,7 +281,7 @@ class Field
     }
     if (\strcasecmp($language,'php')==0) {
 
-      if ( \mb_strlen($this->default) == 0 ) {
+      if ( \is_null($this->default) || \mb_strlen($this->default) == 0 ) {
 
         return 'null';
       } else
