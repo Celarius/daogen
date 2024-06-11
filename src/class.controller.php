@@ -124,7 +124,7 @@ class Controller
     // $s .= '  }'.PHP_EOL;
     // $s .= PHP_EOL;
 
-    $s .= ' /** @var  array Payload data */'.PHP_EOL;
+    $s .= ' /** @var  array<mixed> Payload data */'.PHP_EOL;
     $s .= ' protected $body;'.PHP_EOL;
     $s .= PHP_EOL;
 
@@ -134,9 +134,9 @@ class Controller
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Verify GET headers & params'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @param      array   $args   Path variables as key=value array'.PHP_EOL;
+    $s .= '   * @param      array<mixed> $args   Path variables as key=value array'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @return     null|Response   If a response is returned, this should be sent to caller'.PHP_EOL;
+    $s .= '   * @return     null|Response        If a response is returned, this should be sent to caller'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
     $s .= '  public function verifyGET(array $args)'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
@@ -150,7 +150,7 @@ class Controller
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Handle GET requests'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @param      array   $args   Path variables as key=value array'.PHP_EOL;
+    $s .= '   * @param      array<mixed> $args   Path variables as key=value array'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
     $s .= '   * @return     Response'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
@@ -201,9 +201,9 @@ class Controller
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Verify POST headers & body, decodes contents into $this->body'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @param      array   $args   Path variables as key=value array'.PHP_EOL;
+    $s .= '   * @param      array<mixed> $args   Path variables as key=value array'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @return     null|Response   If a response is returned, this should be sent to caller'.PHP_EOL;
+    $s .= '   * @return     null|Response        If a response is returned, this should be sent to caller'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
     $s .= '  public function verifyPOST(array $args)'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
@@ -245,7 +245,7 @@ class Controller
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Handle POST requests'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @param      array   $args   Path variables as key=value array'.PHP_EOL;
+    $s .= '   * @param      array<mixed> $args   Path variables as key=value array'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
     $s .= '   * @return     Response'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
@@ -296,9 +296,9 @@ class Controller
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Verify PUT headers & body, decodes contents into $this->body'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @param      array   $args   Path variables as key=value array'.PHP_EOL;
+    $s .= '   * @param      array<mixed> $args   Path variables as key=value array'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @return     null|Response   If a response is returned, this should be sent to caller'.PHP_EOL;
+    $s .= '   * @return     null|Response        If a response is returned, this should be sent to caller'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
     $s .= '  public function verifyPUT(array $args)'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
@@ -360,7 +360,7 @@ class Controller
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Handle PUT requests'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @param      array   $args   Path variables as key=value array'.PHP_EOL;
+    $s .= '   * @param      array<mixed> $args   Path variables as key=value array'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
     $s .= '   * @return     Response'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
@@ -428,9 +428,9 @@ class Controller
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Verify DELETE headers & params'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @param      array   $args   Path variables as key=value array'.PHP_EOL;
+    $s .= '   * @param      array<mixed> $args   Path variables as key=value array'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @return     null|Response   If a response is returned, this should be sent to caller'.PHP_EOL;
+    $s .= '   * @return     null|Response        If a response is returned, this should be sent to caller'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
     $s .= '  public function verifyDELETE(array $args)'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
@@ -457,7 +457,7 @@ class Controller
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Handle DELETE requests'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @param      array   $args   Path variables as key=value array'.PHP_EOL;
+    $s .= '   * @param      array<mixed> $args   Path variables as key=value array'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
     $s .= '   * @return     Response'.PHP_EOL;
     $s .= '   */'.PHP_EOL;

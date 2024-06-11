@@ -118,7 +118,7 @@ class Dao {
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Make/Generate an Entity'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @param  array  $fields             Array with key=value for fields'.PHP_EOL;
+    $s .= '   * @param  array<mixed> $fields      Array with key=value for fields'.PHP_EOL;
     $s .= '   * @return AbstractBaseEntity'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
     $s .= '  function makeEntity(array $fields=[]): AbstractBaseEntity'.PHP_EOL;
@@ -134,7 +134,7 @@ class Dao {
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Fetch all records in table'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @return array'.PHP_EOL;
+    $s .= '   * @return array<mixed>'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
     $s .= '  public function fetchAll(): array'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
@@ -159,8 +159,8 @@ class Dao {
     $s .= '  /**'.PHP_EOL;
     $s .= '   * Fetch records by Keywords'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @param  array $keywords            Array with keyword = value'.PHP_EOL;
-    $s .= '   * @return array'.PHP_EOL;
+    $s .= '   * @param  array<mixed> $keywords     Array with keyword = value'.PHP_EOL;
+    $s .= '   * @return array<mixed>'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
     $s .= '  public function fetchByKeywords(array $keywords=[]): array'.PHP_EOL;
     $s .= '  {'.PHP_EOL;

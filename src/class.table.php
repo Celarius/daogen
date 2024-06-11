@@ -24,9 +24,9 @@ class Table
   /**
    * Constructor
    *
-   * @param      [type]  $database  [description]
-   * @param      string  $ddl       [description]
-   * @param      array   $options   [description]
+   * @param      [type] $database         [description]
+   * @param      string $ddl              [description]
+   * @param      array<mixed> $options    [description]
    */
   public function __construct($database, string $ddl='', array $options=[])
   {
@@ -78,6 +78,7 @@ class Table
       }
       if (empty(trim($line))) continue;
       if (trim($line)==='(') continue;
+      if (substr(trim($line),0,2)==='--') continue;     // -- comment lines
       if (substr(trim($line),0,1)===')') break;
       if (substr(trim($line),0,11)==='PRIMARY KEY') break;
       if (substr(trim($line),0,11)==='CONSTRAINT ') break;
@@ -132,7 +133,7 @@ class Table
   /**
    * Get all fields
    *
-   * @return  array
+   * @return  array<mixed>
    */
   public function getFields()
   {
@@ -143,6 +144,7 @@ class Table
    * Check if table has a field by the name
    *
    * @param  string  $fieldName [description]
+   *
    * @return boolean
    */
   public function hasField(string $fieldName)

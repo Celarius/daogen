@@ -17,8 +17,8 @@ class Entity
   /**
    * Constructor
    *
-   * @param      <type>  $table    The table
-   * @param      array   $options  The options
+   * @param      mixed $table             The table
+   * @param      array<mixed> $options    The options
    */
   public function __construct($table=null, array $options=[])
   {
@@ -127,7 +127,7 @@ class Entity
     $s .= '   *'.PHP_EOL;
     $s .= '   * @param    $removedKeys     Array of keynames to remove from result'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @return   array'.PHP_EOL;
+    $s .= '   * @return   array<mixed>'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
     $s .= '  public function asArray(array $removedKeys=[]): array'.PHP_EOL;
     $s .= '  {'.PHP_EOL;
@@ -150,7 +150,7 @@ class Entity
     $s .= '   *'.PHP_EOL;
     $s .= '   * @param    $fields     Array of fields'.PHP_EOL;
     $s .= '   *'.PHP_EOL;
-    $s .= '   * @return   array'.PHP_EOL;
+    $s .= '   * @return   array<mixed>'.PHP_EOL;
     $s .= '   */'.PHP_EOL;
     $s .= '  public function fromArray(array $fields): array'.PHP_EOL;
     $s .= '  {'.PHP_EOL;

@@ -51,6 +51,7 @@ class Field
     # Set Name
     $this->name = \strtolower($parts[0] ?? '');
     $this->name = \str_replace('"','',$this->name); // Remove enclosing "" chars
+    $this->name = \str_replace("'",'',$this->name); // Remove enclosing '' chars
     $this->name = \str_replace('`','',$this->name); // Remove enclosing `` chars
 
     # Set type
