@@ -18,20 +18,37 @@ use \App\Models\AbstractBaseEntity;
  */
 abstract class AbstractBaseDao implements AbstractBaseDaoInterface
 {
-  /** @var        string          The connection name */
+  /**
+   * The connection name
+   * @var string
+   */
   protected $connectionName;
 
-  /** @var        array           The connection parameters (optional) */
+  /**
+   * The connection parameters (optional)
+   * @var array
+   */
   protected $params;
 
-  /** @var        PdoConnection   The connection */
+  /**
+   * The connection
+   * @var PdoConnection
+   */
   protected $connection;
 
-  /** @var        string          The table name */
+  /**
+   * The table name
+   * @var string
+   */
   protected $table;
 
-  /** @var        int             The cache TTL for entity Items */
+  /**
+   * The cache TTL for entity Items
+   * @var int
+   */
   protected $cacheTTL;
+
+# *******************************************************************************************************************
 
   /**
    * Constructor
@@ -54,12 +71,12 @@ abstract class AbstractBaseDao implements AbstractBaseDaoInterface
   /**
    * Fetch all rows based on $sql and $prams
    *
-   * @param      string  $sql     [description]
-   * @param      array   $params  [description]
+   * @param   string $sql                                       SQL to execute
+   * @param   array<mixed> $params                              Array with paramters key=value
    *
-   * @return     array
+   * @return  array<AbstractBaseEntity>                         Array with result
    */
-  public function fetchCustom(string $sql,array $params=[]): array
+  public function fetchCustom(string $sql,array $params=[])
   {
     # If we have no connection ..
     if (is_null($this->getConnection())) return [];
@@ -70,19 +87,25 @@ abstract class AbstractBaseDao implements AbstractBaseDaoInterface
     # Default to no rows returned
     $rows = [];
 
+    $autoCommit = $this->beginTransaction();
+
     try {
-      $autoCommit = $this->beginTransaction();
+
       # Prepare
       if ($sth=$this->getConnection()->prepare($sql)) {
         # Binds
         $this->setBinds($sth,$params);
 
-        # Exec
         if ($sth->execute()) {
-          # Loop resulting rows
-          while ($row = $sth->fetch(\PDO::FETCH_ASSOC)) {
+          # Fetch everyting in one go
+          $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
+
+          # Loop result, converting each entry with makeEntity()
+          foreach ($result as $i=>$row) {
             $rows[] = $this->makeEntity($row);
+            unset($result[$i]);
           }
+          unset($result);
         }
         $sth->closeCursor();
       }
@@ -93,7 +116,12 @@ abstract class AbstractBaseDao implements AbstractBaseDaoInterface
       if ($autoCommit) $this->rollback();
 
       # Log the exception
-      \logger()->critical($e->getMessage(),['sql'=>$sql,'params'=>$params,'trace'=>$e->getTraceAsString()]);
+      \logger()->critical($e->getMessage(),[
+        'sql'     => $sql,
+        'params'  => $params,
+        'rid'     => \container('requestId'),
+        'trace'   => $e->getTraceAsString()]
+      );
 
       # Rethrow the exception so calling function can handle it
       throw $e;
@@ -366,7 +394,7 @@ abstract class AbstractBaseDao implements AbstractBaseDaoInterface
   public function fetchCount(string $field,array $params=[]): int
   {
     # If we have no connection ..
-    if (is_null($this->getConnection())) return [];
+    if (is_null($this->getConnection())) return 0;
 
     $sql = 'SELECT COUNT('.$field.') AS cnt FROM '.$this->getTable();
 
