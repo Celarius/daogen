@@ -11,7 +11,8 @@
  *
  * @return     string
  */
-function mb_str_pad($str, $pad_len, $pad_str = ' ', $dir = STR_PAD_RIGHT, $encoding = NULL)
+if (!function_exists('mb_str_pad')) {
+    function mb_str_pad($str, $pad_len, $pad_str = ' ', $dir = STR_PAD_RIGHT, $encoding = NULL)
 {
     $encoding = $encoding === NULL ? mb_internal_encoding() : $encoding;
     $padBefore = $dir === STR_PAD_BOTH || $dir === STR_PAD_LEFT;
@@ -25,6 +26,7 @@ function mb_str_pad($str, $pad_len, $pad_str = ' ', $dir = STR_PAD_RIGHT, $encod
     $after = $padAfter ? mb_substr($repeatedString, 0, (int) ceil($targetLen), $encoding) : '';
 
     return $before . $str . $after;
+}
 }
 
 /**

@@ -24,7 +24,7 @@ interface AbstractBaseDaoInterface
   function execCustom(string $sql, array $params=[]): bool;
   function execCustomRowCount(string $sql, array $params=[]): int;
   function execCustomGetLastId(string $sql, array $params=[]): int;
-  function fetchCount(string $field,array $params=[]): int;
+  function fetchCount(string $field,array $params=[]);
 
   function insert(AbstractBaseEntity &$item): bool;
   function update(AbstractBaseEntity $item): bool;

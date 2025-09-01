@@ -361,12 +361,12 @@ abstract class AbstractBaseDao implements AbstractBaseDaoInterface
    * @param      string  $field   Field to count
    * @param      array   $params  [description]
    *
-   * @return     int
+   * @return     null|int
    */
-  public function fetchCount(string $field,array $params=[]): int
+  public function fetchCount(string $field,array $params=[])
   {
     # If we have no connection ..
-    if (is_null($this->getConnection())) return [];
+    if (is_null($this->getConnection())) return null;
 
     $sql = 'SELECT COUNT('.$field.') AS cnt FROM '.$this->getTable();
 
@@ -704,7 +704,7 @@ abstract class AbstractBaseDao implements AbstractBaseDaoInterface
   /**
    * Set the DB connection
    *
-   * @param      PdoConnection  $connection
+   * @param      ?PdoConnection  $connection
    *
    * @return     self
    */
