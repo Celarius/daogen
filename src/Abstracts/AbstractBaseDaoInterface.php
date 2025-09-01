@@ -18,7 +18,7 @@ use \App\Models\AbstractBaseEntity;
 interface AbstractBaseDaoInterface
 {
   function makeEntity(array $fields=[]): AbstractBaseEntity;
-  function fetchCustom(string $sql,array $params=[]): array;
+  function fetchCustom(string $sql,array $params=[]);
   function fetchBy(string $field, $value);
   function fetchAllBy(string $field, $value);
   function execCustom(string $sql, array $params=[]): bool;
